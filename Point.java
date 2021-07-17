@@ -8,9 +8,9 @@
  *
  ******************************************************************************/
 
-import java.util.Comparator;
-
 import edu.princeton.cs.algs4.StdDraw;
+
+import java.util.Comparator;
 
 public class Point implements Comparable<Point> {
 
@@ -61,13 +61,16 @@ public class Point implements Comparable<Point> {
      */
     public double slopeTo(Point that) {
         /* YOUR CODE HERE */
-        double slope = (y * 1.0 - that.y) / (x - that.x);
+        double slope = (y * 1.0 - that.y * 1.0) / (x - that.x);
 
-        if (x - that.x == 0) {
-            return Double.POSITIVE_INFINITY;
-        }
-        else if (x == that.x && y == that.y) {
+        if (x == that.x && y == that.y) {
             return Double.NEGATIVE_INFINITY;
+        }
+        else if (y == that.y) {
+            return 0;
+        }
+        else if (x == that.x) {
+            return Double.POSITIVE_INFINITY;
         }
         else {
             return slope;
@@ -88,6 +91,15 @@ public class Point implements Comparable<Point> {
      */
     public int compareTo(Point that) {
         /* YOUR CODE HERE */
+        if (x == that.x && y == that.y) {
+            return 0;
+        }
+        else if ((y < that.y) || (y == that.y && x < that.x)) {
+            return -1;
+        }
+        else {
+            return 1;
+        }
     }
 
     /**
@@ -98,8 +110,10 @@ public class Point implements Comparable<Point> {
      */
     public Comparator<Point> slopeOrder() {
         /* YOUR CODE HERE */
-    }
+        Comparator<Point> comparator = (o1, o2) -> Double.compare(slopeTo(o1), slopeTo(o2));
 
+        return comparator;
+    }
 
     /**
      * Returns a string representation of this point.
